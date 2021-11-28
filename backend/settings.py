@@ -24,14 +24,16 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default="django-insecure-cd8um+tpv=t#0
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
 IS_LIVE = 'RENDER' in os.environ
 
 
 if IS_LIVE:
     DEBUG = False
+    # print("\n Running live!! \n\n")
 else:
     DEBUG = True
+    # print("\n Running in debug mode \n\n")
+
 # DEBUG = 'RENDER' not in os.environ
 
 
@@ -48,7 +50,10 @@ if RENDER_EXTERNAL_HOSTNAME:
 # Application definition
 
 INSTALLED_APPS = [
+    'apps.documents',
+    'apps.users',
     'apps.categories',
+    'django_summernote',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,6 +74,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'backend.urls'
+
+AUTH_USER_MODEL="users.User"
 
 TEMPLATES = [
     {
