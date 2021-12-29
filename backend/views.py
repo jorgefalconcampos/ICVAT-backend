@@ -88,3 +88,7 @@ def register(request):
     }
     return render(request, template, context)
 
+def page_not_found_view(request, exception):
+    template = TEMPLATES_DIR / 'http_states' / '404.html'
+
+    return render(request, template, status=404)
