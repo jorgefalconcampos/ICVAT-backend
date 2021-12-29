@@ -86,6 +86,25 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-cors-headers"
+version = "3.10.1"
+description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+Django = ">=2.2"
+
+[[package]]
+name = "django-rest-passwordreset"
+version = "1.2.1"
+description = "An extension of django rest framework, providing a configurable password reset strategy"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "django-summernote"
 version = "0.8.20.0"
 description = "Summernote plugin for Django"
@@ -261,7 +280,7 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "31fa5fe7d9c4e0c97713000ee9c28a661ea212b904d92b9e8863d668cd81be26"
+content-hash = "bf826a9d80c4345feb3edaac64e297739d71f9d3c8bfdce30f076b53bdf0429b"
 
 [metadata.files]
 asgiref = [
@@ -340,6 +359,14 @@ dj-database-url = [
 django = [
     {file = "Django-3.2.9-py3-none-any.whl", hash = "sha256:e22c9266da3eec7827737cde57694d7db801fedac938d252bf27377cec06ed1b"},
     {file = "Django-3.2.9.tar.gz", hash = "sha256:51284300f1522ffcdb07ccbdf676a307c6678659e1284f0618e5a774127a6a08"},
+]
+django-cors-headers = [
+    {file = "django-cors-headers-3.10.1.tar.gz", hash = "sha256:b5a874b492bcad99f544bb76ef679472259eb41ee5644ca62d1a94ddb26b7f6e"},
+    {file = "django_cors_headers-3.10.1-py3-none-any.whl", hash = "sha256:1390b5846e9835b0911e2574409788af87cd9154246aafbdc8ec546c93698fe6"},
+]
+django-rest-passwordreset = [
+    {file = "django-rest-passwordreset-1.2.1.tar.gz", hash = "sha256:9762f337983b33f66b9ec95d4f19b3da8daba2b7d22ac005ba114ddda98aae38"},
+    {file = "django_rest_passwordreset-1.2.1-py3-none-any.whl", hash = "sha256:6be5d34b334cae4e381336fa32987e48276eec976aa454bb0ef428438eba3d44"},
 ]
 django-summernote = [
     {file = "django-summernote-0.8.20.0.tar.gz", hash = "sha256:52e9b12438ed9eac0d77729f758f2aae06e468b5cbce133e24100d58ae4e43a8"},

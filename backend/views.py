@@ -6,9 +6,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as do_login, logout as do_logout
 from django.shortcuts import redirect
 from django.contrib import messages
-from . forms import RegisterForm
 
-from users.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 
 

@@ -56,14 +56,22 @@ if RENDER_EXTERNAL_HOSTNAME:
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 
+
+
 # Application definition
 
 INSTALLED_APPS = [
-    'documents',
+    # custom apps
     'categories',
     'dashboard',
+    'documents',
     'users',
+    # third-party apps
+    'rest_framework',
+    'corsheaders',
+    'django_rest_passwordreset',
     'django_summernote',
+    # built-in apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -73,6 +81,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -82,6 +91,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Cors settings
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
+CORS_ALLOW_CREDENTIALS = True
+
 
 ROOT_URLCONF = 'backend.urls'
 
