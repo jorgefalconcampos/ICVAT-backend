@@ -1,11 +1,13 @@
-from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render
 
 # Create your views here.
+
 def index(request):
     """User main page"""
-    return HttpResponse("User main")
+    return HttpResponse("User")
+
 
 def profile(request):
-    """Profile main page"""
+    """User profile page"""
     return HttpResponse("User Profile")
