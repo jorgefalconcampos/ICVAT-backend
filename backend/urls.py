@@ -27,10 +27,11 @@ urlpatterns = [
     path('register', views.register, name="register"),
     path('logout', views.login, name="logout"),
 
-    path('documents/', include('documents.urls')),
-    path('categories/', include('categories.urls')),
-    path('user/', include('users.urls')),
     path('a12n/', include('a12n.urls')),
+    path('categories/', include('categories.urls')),
+    path('dashboard/', include('dashboard.urls')),
+    path('documents/', include('documents.urls')),
+    path('user/', include('users.urls')),
 ]
 
 
