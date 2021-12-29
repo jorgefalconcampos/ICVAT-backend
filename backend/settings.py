@@ -7,12 +7,21 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os, sys
 from pathlib import Path
 import dj_database_url
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+
+PROJECT_DIR = Path(__file__).resolve().parent # ===> PROJECT FOLDER 
+BASE_DIR = PROJECT_DIR.parent # ===> ROOT FOLDER
+
+
+
+
+# Templates directories
+TEMPLATES_DIR = PROJECT_DIR / 'templates' # ===> project templates
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,15 +35,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default="django-insecure-cd8um+tpv=t#0
 # SECURITY WARNING: don't run with debug turned on in production!
 IS_LIVE = 'RENDER' in os.environ
 
-
 if IS_LIVE:
     DEBUG = False
     # print("\n Running live!! \n\n")
 else:
     DEBUG = True
     # print("\n Running in debug mode \n\n")
-
-# DEBUG = 'RENDER' not in os.environ
 
 
 ALLOWED_HOSTS = ['*']
@@ -47,12 +53,16 @@ if RENDER_EXTERNAL_HOSTNAME:
 
 
 
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+
+
 # Application definition
 
 INSTALLED_APPS = [
-    'apps.documents',
-    'apps.users',
-    'apps.categories',
+    'documents',
+    'categories',
+    'dashboard',
+    'users',
     'django_summernote',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -80,7 +90,7 @@ AUTH_USER_MODEL="users.User"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ TEMPLATES_DIR ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -156,6 +166,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
 
 
 # Following settings only make sense on production and may break development environments.

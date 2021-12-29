@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
-class DocumentsConfig(AppConfig):
+
+class A12NConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'documents'
+    name = 'a12n'
