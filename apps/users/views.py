@@ -20,7 +20,7 @@ class LoginView(APIView):
             return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
 
         # Si no es correcto devolvemos un error en la petición
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_403_FORBIDDEN)
 
 
 class LogoutView(APIView):
