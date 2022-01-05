@@ -93,8 +93,17 @@ MIDDLEWARE = [
 ]
 
 # Cors settings
-CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://localhost:8080", "http://localhost:8080", "http://localhost:8081"]
 CORS_ALLOW_CREDENTIALS = True
+
+
+# Django Rest Framework (DRF) settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
+
 
 
 ROOT_URLCONF = 'backend.urls'

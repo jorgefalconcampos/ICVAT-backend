@@ -26,12 +26,7 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('', views.index, name="index"),
     path('admin/', admin.site.urls),
-    path('login', views.login, name="login"),
-    path('register', views.register, name="register"),
-    path('logout', views.login, name="logout"),
 
-
-    # path('a12n/', include('a12n.urls')),
     path('categories/', include('categories.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('documents/', include('documents.urls')),

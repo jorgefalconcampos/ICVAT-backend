@@ -17,9 +17,7 @@ class LoginView(APIView):
         # Si es correcto añadimos a la request la información de sesión
         if user:
             login(request, user)
-            return Response(
-                UserSerializer(user).data,
-                status=status.HTTP_200_OK)
+            return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
 
         # Si no es correcto devolvemos un error en la petición
         return Response(status=status.HTTP_404_NOT_FOUND)
