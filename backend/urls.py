@@ -19,18 +19,20 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls import handler404
+from rest_framework import routers
+
+router = routers.DefaultRouter()
 
 urlpatterns = [
     path('', views.index, name="index"),
     path('admin/', admin.site.urls),
-    path('login', views.login, name="login"),
-    path('register', views.register, name="register"),
-    path('logout', views.login, name="logout"),
 
-    path('documents/', include('documents.urls')),
     path('categories/', include('categories.urls')),
-    path('user/', include('users.urls')),
-    path('a12n/', include('a12n.urls')),
+    path('dashboard/', include('dashboard.urls')),
+    path('documents/', include('documents.urls')),
+
+    path('api/', include('users.urls')),
+    path('api/', include(router.urls)),
 ]
 
 
