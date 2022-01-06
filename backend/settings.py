@@ -114,8 +114,8 @@ DJANGO_REST_PASSWORDRESET_NO_INFORMATION_LEAKAGE = True # HTTP 200 even when use
 DJANGO_REST_PASSWORDRESET_TOKEN_CONFIG = {
     "CLASS": "django_rest_passwordreset.tokens.RandomStringTokenGenerator",
     "OPTIONS": {
-        "min_length": 10,
-        "max_length": 15
+        "min_length": 15,
+        "max_length": 20
     }
 }
 
