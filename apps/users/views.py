@@ -6,6 +6,12 @@ from rest_framework import generics, status
 from . serializers import UserSerializer
 from django.dispatch import receiver
 from django_rest_passwordreset.signals import reset_password_token_created
+from backend.utils.mailer import SendResetPasswordMail
+from django.urls import reverse
+from django.template.loader import render_to_string
+
+from django.conf import settings as conf_settings
+
 
 class LoginView(APIView):
     def post(self, request):
@@ -38,7 +44,16 @@ class SignUpView(generics.CreateAPIView):
 
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
-    # Aquí deberíamos mandar un correo al cliente...
-    print(
-        f"\nRecupera la contraseña de tu cuenta. Correo '{reset_password_token.user.email}' usando el token '{reset_password_token.key}' desde la API http://localhost:8000/api/user/password-reset/confirm/.\n\n"
-        f"También puedes hacerlo directamente desde el cliente web en http://localhost:3000/new-password/?token={reset_password_token.key}.\n")
+    email = reset_password_token.user.email
+    username = reset_password_token.user.username
+    url = f"{conf_settings.CLIENT_URL}/reset-password?t={reset_password_token.key}"
+    
+    context = {
+        'email': email,
+        'username': username,
+        'url': url
+    }
+
+    print(f"\n\nInfo enviada: \n - email: {email}\n - user: {username}\n - url con token: {url}\n\n")
+
+    SendResetPasswordMail(email, context, username=username).send_email()

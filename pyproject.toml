@@ -15,6 +15,8 @@ django-summernote = "^0.8.20"
 djangorestframework = "^3.12.4"
 django-rest-passwordreset = "^1.2.1"
 django-cors-headers = "^3.10.1"
+python-dotenv = "^0.19.2"
+poetry-dotenv-plugin = "^0.1.0-alpha.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

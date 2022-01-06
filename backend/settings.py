@@ -9,15 +9,14 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os, sys
 from pathlib import Path
+from dotenv import load_dotenv
 import dj_database_url
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+load_dotenv()
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 PROJECT_DIR = Path(__file__).resolve().parent # ===> PROJECT FOLDER 
 BASE_DIR = PROJECT_DIR.parent # ===> ROOT FOLDER
-
-
-
 
 # Templates directories
 TEMPLATES_DIR = PROJECT_DIR / 'templates' # ===> project templates
@@ -27,9 +26,14 @@ TEMPLATES_DIR = PROJECT_DIR / 'templates' # ===> project templates
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 
+
+# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', default="django-insecure-cd8um+tpv=t#0kb)%t7*g$j81g4+ju(bcg8fu+1d)ej0muzvb^")
+
+
+# Client deployed URL (frontend)
+CLIENT_URL = os.environ.get("CLIENT_URL")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -51,15 +55,9 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
-
-
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
-
-
-
 # Application definition
-
 INSTALLED_APPS = [
     # custom apps
     'categories',
@@ -92,6 +90,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 # Cors settings
 CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://localhost:8080", "http://localhost:8080", "http://localhost:8081"]
 CORS_ALLOW_CREDENTIALS = True
@@ -104,11 +103,34 @@ REST_FRAMEWORK = {
     )
 }
 
+
 # DRF | django-rest-passwordreset settings 
 DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 0.005 # 18 seconds
-# DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 0.008 # 1 minuto
+# DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 0.008 # 30 segundos
 # DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 0.01 # 1 minuto
 # DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 0.08 # 5 minutos
+DJANGO_REST_PASSWORDRESET_NO_INFORMATION_LEAKAGE = True # HTTP 200 even when user doesn't exists in DB
+
+DJANGO_REST_PASSWORDRESET_TOKEN_CONFIG = {
+    "CLASS": "django_rest_passwordreset.tokens.RandomStringTokenGenerator",
+    "OPTIONS": {
+        "min_length": 15,
+        "max_length": 20
+    }
+}
+
+
+
+# Email settings
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+# EMAIL_TIMEOUT = os.environ.get('EMAIL_TIMEOUT')
+
+
+
 
 
 ROOT_URLCONF = 'backend.urls'
@@ -136,7 +158,6 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 
 if IS_LIVE:
     DATABASES = {
