@@ -32,6 +32,10 @@ TEMPLATES_DIR = PROJECT_DIR / 'templates' # ===> project templates
 SECRET_KEY = os.environ.get('SECRET_KEY', default="django-insecure-cd8um+tpv=t#0kb)%t7*g$j81g4+ju(bcg8fu+1d)ej0muzvb^")
 
 
+# Client deployed URL (frontend)
+CLIENT_URL = os.environ.get("CLIENT_URL")
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 IS_LIVE = 'RENDER' in os.environ
 
@@ -117,13 +121,15 @@ DJANGO_REST_PASSWORDRESET_TOKEN_CONFIG = {
 
 
 
-
+# Email settings
 EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
 EMAIL_HOST = os.environ.get("EMAIL_HOST")
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = os.environ.get('EMAIL_PORT')
 # EMAIL_TIMEOUT = os.environ.get('EMAIL_TIMEOUT')
+
+
 
 
 
