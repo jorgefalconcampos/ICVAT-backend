@@ -6,6 +6,9 @@ from rest_framework import generics, status
 from . serializers import UserSerializer
 from django.dispatch import receiver
 from django_rest_passwordreset.signals import reset_password_token_created
+from backend.utils.mailer import SendResetPasswordMail
+from django.urls import reverse
+from django.template.loader import render_to_string
 
 class LoginView(APIView):
     def post(self, request):
@@ -39,6 +42,32 @@ class SignUpView(generics.CreateAPIView):
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
     # Aquí deberíamos mandar un correo al cliente...
-    print(
-        f"\nRecupera la contraseña de tu cuenta. Correo '{reset_password_token.user.email}' usando el token '{reset_password_token.key}' desde la API http://localhost:8000/api/user/password-reset/confirm/.\n\n"
-        f"También puedes hacerlo directamente desde el cliente web en http://localhost:3000/new-password/?token={reset_password_token.key}.\n")
+
+    email = reset_password_token.user.email
+    username = reset_password_token.user.username
+
+    context = {
+        'email': email,
+        'username': username,
+        'token': reset_password_token.key
+    }
+
+
+    # template = "users/pwd/user_reset_password.html"
+
+    # html_message = render_to_string(template, context)
+
+    SendResetPasswordMail(email, context, username=username).send_email()
+
+    # context = {
+    #     'current_user': reset_password_token.user,
+    #     'username': reset_password_token.user.username,
+    #     'email': reset_password_token.user.email,
+    #     'reset_pwd_url': reset_password_token.key
+    # }
+    # print("{}?token={}".format(instance.request.build_absolute_uri(reverse('password_reset:reset-password-confirm')), reset_password_token.key))
+
+    # print(
+        # f"\nRecupera la contraseña de tu Cuenta, detalles: user: {reset_password_token.user} - username: {reset_password_token.user.username} - email {reset_password_token.user.email} - ")
+        # f"Correo '{reset_password_token.user.email}' usando el token '{reset_password_token.key}' desde la API http://localhost:8000/api/user/password-reset/confirm/.\n\n"
+        # f"También puedes hacerlo directamente desde el cliente web en http://localhost:3000/new-password/?token={reset_password_token.key}.\n")
