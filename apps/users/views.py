@@ -54,6 +54,6 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
         'url': url
     }
 
-    print(f"\n\nInfo enviada: \n - email: {email}\n - user: {username}\n - url con token: {url}\n\n")
+    print(f"\n\nInfo enviada: \n - email: {email}\n - user: {username}\n - url: {url}\n\n")
 
     SendResetPasswordMail(email, context, username=username).send_email()
