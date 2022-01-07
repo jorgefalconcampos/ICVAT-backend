@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
     # Declarando campos explícitamente, ver más en: https://tinyurl.com/2p85z5kb
     email = serializers.EmailField(required=True)
     username = serializers.CharField(required=True)
-    password = serializers.CharField(min_length=8)
+    password = serializers.CharField(min_length=8, write_only=True)
 
     class Meta:
         model = get_user_model()
