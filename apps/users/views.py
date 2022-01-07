@@ -9,7 +9,6 @@ from django_rest_passwordreset.signals import reset_password_token_created
 from backend.utils.mailer import SendResetPasswordMail
 from django.urls import reverse
 from django.template.loader import render_to_string
-
 from django.conf import settings as conf_settings
 
 
