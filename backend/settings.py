@@ -106,7 +106,10 @@ REST_FRAMEWORK = {
 
 # DRF | django-rest-passwordreset settings 
 DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 0.08 # 5 min
-DJANGO_REST_PASSWORDRESET_NO_INFORMATION_LEAKAGE = True # HTTP 200 even when user doesn't exists in DB
+
+# When true, HTTP 200 is sent, even when user doesn't exists in DB
+DJANGO_REST_PASSWORDRESET_NO_INFORMATION_LEAKAGE = True 
+
 
 DJANGO_REST_PASSWORDRESET_TOKEN_CONFIG = {
     "CLASS": "django_rest_passwordreset.tokens.RandomStringTokenGenerator",
