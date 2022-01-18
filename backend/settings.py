@@ -93,6 +93,7 @@ MIDDLEWARE = [
 
 # Cors settings
 CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://localhost:8080", "http://localhost:8080", "http://localhost:8081"]
+CORS_ORIGIN_WHITELIST.append(os.environ.get('PROD_CLIENT_URL'))
 CORS_ALLOW_CREDENTIALS = True
 
 
