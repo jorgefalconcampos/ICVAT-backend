@@ -2,7 +2,7 @@ from django.core import mail #EmailMessage lives here
 from django.utils.text import format_lazy as fl
 from django.conf import settings as conf_settings
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
+# from django.utils.translation import ugettext_lazy as _
 from django.core.mail.backends.smtp import EmailBackend
 from django.core.mail import send_mail, get_connection, send_mass_mail
 

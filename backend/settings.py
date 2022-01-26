@@ -8,11 +8,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os, sys
+import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
-import dj_database_url
+from django.core.management.utils import get_random_secret_key
 
 load_dotenv()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 PROJECT_DIR = Path(__file__).resolve().parent # ===> PROJECT FOLDER 
@@ -29,33 +31,20 @@ TEMPLATES_DIR = PROJECT_DIR / 'templates' # ===> project templates
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', default="django-insecure-cd8um+tpv=t#0kb)%t7*g$j81g4+ju(bcg8fu+1d)ej0muzvb^")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 
-# Client deployed URL (frontend)
-CLIENT_URL = os.environ.get("CLIENT_URL")
+# Debug and development settings
+DEBUG = os.getenv("DEBUG", "False") == "True"
+DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
 
-# SECURITY WARNING: don't run with debug turned on in production!
-IS_LIVE = 'RENDER' in os.environ
-
-if IS_LIVE:
-    DEBUG = False
-    # print("\n Running live!! \n\n")
-else:
-    DEBUG = True
-    # print("\n Running in debug mode \n\n")
-
-
-ALLOWED_HOSTS = ['*']
-
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME') #this env variable is automatically set by Render
-
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+# Client URL (frontend), by default is always the dev URL
+CLIENT_URL = os.environ.get("DEV_CLIENT_URL") if DEVELOPMENT_MODE else os.environ.get("PROD_CLIENT_URL")
 
 
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -81,7 +70,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -91,9 +79,14 @@ MIDDLEWARE = [
 ]
 
 
+
+# Allowed hosts
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+
+
 # Cors settings
 CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://localhost:8080", "http://localhost:8080", "http://localhost:8081"]
-CORS_ORIGIN_WHITELIST.append(os.environ.get('PROD_CLIENT_URL'))
+CORS_ORIGIN_WHITELIST.append(CLIENT_URL)
 CORS_ALLOW_CREDENTIALS = True
 
 
@@ -160,22 +153,18 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if IS_LIVE:
+if DEVELOPMENT_MODE is True:
     DATABASES = {
-        'default': dj_database_url.config(
-            # Feel free to alter this value to suit your needs.
-            default=os.environ.get('POSTGRES_EXTERNAL_CONNECTION_URL'),
-            # default='postgresql://postgres:postgres@localhost:5432/mysite',
-            conn_max_age=600
-        )
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            # 'NAME': BASE_DIR / 'db.sqlite3',
-            'NAME': str(os.path.join(BASE_DIR, 'db.sqlite3')),
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
         }
+    }
+elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
+    if os.getenv("DATABASE_URL", None) is None:
+        raise Exception("DATABASE_URL environment variable not defined")
+    DATABASES = {
+        "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
     }
 
 
@@ -216,19 +205,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-
-
-
-# Following settings only make sense on production and may break development environments.
-if not DEBUG:
-    # Tell Django to copy statics to the `staticfiles` directory
-    # in your application directory on Render.
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-    # Turn on WhiteNoise storage backend that takes care of compressing static files
-    # and creating unique names for each version so they can safely be cached forever.
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Default primary key field type
