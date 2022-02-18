@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_rest_passwordreset',
     'django_summernote',
+    'taggit',
     # built-in apps
     'django.contrib.admin',
     'django.contrib.auth',
