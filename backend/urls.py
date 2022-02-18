@@ -21,11 +21,17 @@ from django.conf import settings
 from django.conf.urls import handler404
 from rest_framework import routers
 
+# -------------------#
+#    Project URL'S   #
+# -------------------#
+
 router = routers.DefaultRouter()
 
 urlpatterns = [
     path('', views.index, name="index"),
     path('admin/', admin.site.urls),
+
+    path('summernote/', include('django_summernote.urls')),
 
     path('categories/', include('categories.urls')),
     path('dashboard/', include('dashboard.urls')),

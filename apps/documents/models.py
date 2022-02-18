@@ -12,7 +12,7 @@ class Document(m.Model):
     title = m.CharField(max_length=200)
     slug = m.SlugField(unique=False)
     category = m.ForeignKey(Category, on_delete=m.CASCADE)
-    # body
+    body = m.TextField()
     tags = TaggableManager()
     created_date = m.DateField(default=timezone.now)
 
