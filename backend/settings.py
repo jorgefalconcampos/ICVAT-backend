@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_rest_passwordreset',
     'django_summernote',
+    'taggit',
     # built-in apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -112,6 +113,19 @@ DJANGO_REST_PASSWORDRESET_TOKEN_CONFIG = {
         "max_length": 20
     }
 }
+
+
+#Config & options for WYSIWYG Summernote editor
+SUMMERNOTE_THEME = 'bs4'
+
+SUMMERNOTE_CONFIG = {
+    'summernote': {
+        'lang': 'es-ES',
+        # 'width': '99%',
+        # 'height': '490',
+    }
+}
+
 
 
 
@@ -207,6 +221,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
+# Media files (uploaded by any user, admin(s) or author)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
 # Default primary key field type
