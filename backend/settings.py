@@ -54,7 +54,9 @@ INSTALLED_APPS = [
     'documents',
     'users',
     # third-party apps
+    'djoser',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'django_rest_passwordreset',
     'django_summernote',
@@ -86,7 +88,7 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split("
 
 
 # Cors settings
-CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://localhost:8080", "http://localhost:8080", "http://localhost:8081"]
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://localhost:8080", "http://localhost:8080", "http://localhost:8081", ]
 CORS_ORIGIN_WHITELIST.append(CLIENT_URL)
 CORS_ALLOW_CREDENTIALS = True
 
@@ -94,8 +96,36 @@ CORS_ALLOW_CREDENTIALS = True
 # Django Rest Framework (DRF) settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    )
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+        'users.auth.BearerAuth',
+
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAdminUser',
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+# Domain setting
+DOMAIN = os.environ.get('DEV_CLIENT_URL') if DEVELOPMENT_MODE else os.environ.get("PROD_CLIENT_URL")
+
+
+DJOSER = {
+    # 'LOGIN_FIELD': 'email', #already defined in AbstractUser,
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SERIALIZERS': {
+        # 'user_create': 'users.serializers.UserCreateSerializer',
+
+        # 'user': 'users.serializers.UserCreateSerializer',
+        'user': 'djoser.serializers.UserSerializer',
+        'activation': 'djoser.serializers.ActivationSerializer',
+    },
+
+    
 }
 
 
@@ -130,6 +160,8 @@ SUMMERNOTE_CONFIG = {
 
 
 # Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER') 
 EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
 EMAIL_HOST = os.environ.get("EMAIL_HOST")
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')

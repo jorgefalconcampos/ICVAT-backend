@@ -19,26 +19,24 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls import handler404
-from rest_framework import routers
+# from rest_framework import routers
 
 # -------------------#
 #    Project URL'S   #
 # -------------------#
 
-router = routers.DefaultRouter()
+# router = routers.DefaultRouter()
 
 urlpatterns = [
     path('', views.index, name="index"),
     path('admin/', admin.site.urls),
-
     path('summernote/', include('django_summernote.urls')),
 
-    path('categories/', include('categories.urls')),
-    path('dashboard/', include('dashboard.urls')),
-    path('documents/', include('documents.urls')),
-
     path('api/', include('users.urls')),
-    path('api/', include(router.urls)),
+    path('api/', include('categories.urls')),
+    path('api/', include('documents.urls')),
+    
+    # path('api/', include(router.urls)),
 ]
 
 

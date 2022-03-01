@@ -1,7 +1,28 @@
+from rest_framework.permissions import IsAuthenticated
+from . permissions import IsOwner
+
+from . import serializers
+from . models import Category
+
 from django.http import HttpResponse
 from django.shortcuts import render
 
-# Create your views here.
+from rest_framework import viewsets
+
+from django.db.models.functions import Lower
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    # queryset = Category.objects.all()
+    serializer_class = serializers.CategorySerializer
+    # authentication_classes = (TokenAuthentication, )
+    permission_classes = [IsAuthenticated, IsOwner]
+
+    def get_queryset(self):
+        return Category.objects.filter(owner=self.request.user).order_by(Lower('slug').asc())
+
+
+
 
 def categories(request):
     """Categories main page"""

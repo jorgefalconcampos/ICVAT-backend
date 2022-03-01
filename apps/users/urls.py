@@ -1,10 +1,10 @@
 from django.urls import path, include
-from .views import LoginView, LogoutView, SignUpView
+# from .views import LoginView, LogoutView, SignUpView
+from . import views
 
 urlpatterns = [
     # Auth views
-    path('user/login/', LoginView.as_view(), name='auth_login'),
-    path('user/logout/', LogoutView.as_view(), name='auth_logout'),
-    path('user/signup/', SignUpView.as_view(), name='auth_signup'),
-    path('user/password-reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
+    # path('restric/', views.restricted),
 ]
