@@ -9,11 +9,14 @@ from django.db.models.functions import Lower
 class CategorySerializer(serializers.ModelSerializer):
 
     def validate(self, data):
-        owner = data.get("owner").id
-        name = data.get("name")
-        if (Category.objects.filter(owner=owner, name=name)):
-            raise serializers.ValidationError("Category name already exists")
-        return data
+        if (self.context.get('request').method == 'POST'):
+            owner = data.get("owner").id
+            name = data.get("name")
+            if (Category.objects.filter(owner=owner, name=name)):
+                raise serializers.ValidationError("Category name already exists")
+            return data
+        else:
+            return data
     
     class Meta:
         model = Category
