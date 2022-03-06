@@ -5,7 +5,7 @@ from . models import Document
 
 class DocumentSerializer(TaggitSerializer, serializers.ModelSerializer):
     tags = TagListSerializerField()
-    category = serializers.CharField(source="category.name")
+    category_name = serializers.CharField(source="category.name")
     class Meta:
         model = Document
-        fields = ['document_id', 'author', 'title', 'category', 'body', 'tags', 'created_date']
+        fields = ['document_id', 'author', 'title', 'category', 'category_name',  'body', 'tags', 'created_date']

@@ -1,3 +1,4 @@
+from codecs import lookup
 from rest_framework import generics
 
 from apps.categories import permissions
@@ -14,6 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = serializers.DocumentSerializer
+    lookup_field = "document_id"
     permission_classes = [IsAuthenticated]
 
     # def get_queryset(self):
