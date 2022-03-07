@@ -5,10 +5,13 @@ from django.contrib.auth.models import User, AbstractUser
 class User(AbstractUser):
     email = models.EmailField(max_length=150, unique=True)
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'password']
+    REQUIRED_FIELDS = ['id', 'username', 'first_name', 'last_name', ]
 
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
+    
+    def get_email(self):
+        return self.email
 
 
 class Customer(User):
