@@ -9,3 +9,4 @@ class DocumentSerializer(TaggitSerializer, serializers.ModelSerializer):
     class Meta:
         model = Document
         fields = ['document_id', 'author', 'title', 'category', 'category_name',  'body', 'tags', 'created_date']
+        read_only_fields = ['document_id', 'author', 'category_name', 'created_date']
