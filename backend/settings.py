@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'dashboard',
     'documents',
     'users',
+    'tags',
     # third-party apps
     'djoser',
     'rest_framework',
