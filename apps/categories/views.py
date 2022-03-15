@@ -1,14 +1,10 @@
 from rest_framework.permissions import IsAuthenticated
 from . permissions import IsOwner
-
 from . import serializers
 from . models import Category
-
 from django.http import HttpResponse
 from django.shortcuts import render
-
 from rest_framework import viewsets
-
 from django.db.models.functions import Lower
 
 
