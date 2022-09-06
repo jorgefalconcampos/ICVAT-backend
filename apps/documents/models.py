@@ -3,7 +3,6 @@ from django.db import models as m
 from categories.models import Category
 from users.models import User
 from taggit.managers import TaggableManager
-from django.utils import timezone
 from django.db.models.signals import pre_save, post_save
 
 class Document(m.Model):
