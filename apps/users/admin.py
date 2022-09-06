@@ -1,8 +1,16 @@
 from django.contrib import admin
-from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
+from . models import User
 
 
-@admin.register(get_user_model())
 class CustomUserAdmin(UserAdmin):
-    pass
+    add_fieldsets = (
+	    (None, { 
+            'fields': (
+                'email',  'username', 'first_name', 'last_name', 'password1', ),
+            }
+        ),
+    )
+
+admin.site.register(User, CustomUserAdmin)
+
