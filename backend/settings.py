@@ -89,7 +89,7 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split("
 
 
 # Cors settings
-CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://localhost:8080", "http://localhost:8080", "http://localhost:8081", ]
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://localhost:5000", "http://localhost:8080", "http://localhost:8080", "http://localhost:8081", "http://192.168.1.156:8080"]
 CORS_ORIGIN_WHITELIST.append(CLIENT_URL)
 CORS_ALLOW_CREDENTIALS = True
 
@@ -118,6 +118,9 @@ DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
+    "PASSWORD_RESET_CONFIRM_URL": "reset-password/{uid}/{token}",
+    # "PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND" : True,
+
     'SERIALIZERS': {
         # 'user_create': 'users.serializers.UserCreateSerializer',
 
