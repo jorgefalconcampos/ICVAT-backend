@@ -89,7 +89,7 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split("
 
 
 # Cors settings
-CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://localhost:5000", "http://localhost:8080", "http://localhost:8080", "http://localhost:8081", "http://192.168.1.156:8080"]
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://localhost:5000", "http://localhost:8080", "http://localhost:8080", "http://localhost:8081", "http://192.168.1.156:8080", "https://icvat-ipn.herokuapp.com"]
 CORS_ORIGIN_WHITELIST.append(CLIENT_URL)
 CORS_ALLOW_CREDENTIALS = True
 
